@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"  
+		width="100%" height="100%" 
+ 		xmlns:local="*" creationComplete="init()"  xmlns:ns1="com.efi.view.*">
+    <!--mx:TraceTarget/-->
+    <mx:HBox x="0" y="0" width="100%" height="100%">
+    <mx:Canvas width="2" height="100%">
+    </mx:Canvas>
+    <mx:VBox x="0" y="0" width="100%" height="100%" verticalGap="0" id="mainContainer" visible="true">
+		
+		<mx:Canvas width="100%" id="banner" verticalScrollPolicy="off" horizontalScrollPolicy="off" height="35">
+			<mx:HBox styleName="TopBanner" x="0" y="0" width="100%">
+				<mx:Canvas width="341" height="36">
+					<mx:Button label="Customers" x="9" y="6"/>
+					<mx:Button label="Users" x="104" y="6"/>
+					<mx:Button label="Invoices" x="170" y="6"/>
+				</mx:Canvas>
+				<mx:Canvas width="70%">
+					<mx:Spacer width="100%"/>
+				</mx:Canvas>
+				<mx:Canvas width="203">
+					<mx:VBox width="203" verticalAlign="middle" x="0">
+						<mx:Spacer height="5"/>
+						<mx:HBox width="100%" horizontalAlign="right" paddingRight="5" verticalAlign="middle">
+							<mx:Text id="preferencesText" text="Preferences   |" styleName="rightMessageBot" useHandCursor="true" buttonMode="true" mouseChildren="false" click="onPreferences()"/>
+							<mx:Text text="Help   |" styleName="rightMessageBot" useHandCursor="true" buttonMode="true" mouseChildren="false" click="showHelp();"/>
+							<mx:Text text="Logout" styleName="rightMessageBot" useHandCursor="true" buttonMode="true" mouseChildren="false" click="onLogout();"/>
+						</mx:HBox>
+					</mx:VBox>
+				</mx:Canvas>
+			</mx:HBox>
+		</mx:Canvas>		
+		
+		<mx:Canvas height="100%" width="100%" id="mainWindow">
+			<ns1:ListUsers x="10" y="10" height="95%">
+			</ns1:ListUsers>
+		</mx:Canvas>
+		
+		<mx:Canvas height="2" width="100%">
+		</mx:Canvas>	
+
+	</mx:VBox>
+    <mx:Canvas width="2" height="100%">
+    </mx:Canvas>
+</mx:HBox>
+    
+<mx:Script>
+	<![CDATA[
+		import mx.formatters.NumberFormatter;
+		import mx.controls.DateField;
+		import flash.utils.setTimeout;
+		import flash.net.navigateToURL;
+		import mx.resources.ResourceBundle;
+		import mx.rpc.remoting.mxml.RemoteObject;
+		import mx.rpc.events.FaultEvent;
+		import mx.controls.Alert;
+		import mx.rpc.events.ResultEvent;
+		import mx.effects.Zoom;
+		import mx.managers.PopUpManager;
+		import com.efi.pages.Login;
+		import mx.managers.ToolTipManager;
+		import flash.events.EventDispatcher;
+		import flash.events.TimerEvent;
+		import flash.external.ExternalInterface;
+		import flash.utils.Timer;
+		
+		public var timer : Timer;
+		public var nf:NumberFormatter;
+		
+		private var remoteObject:RemoteObject;
+		
+		public var localeString : String = "en_US";
+        private static var thisInstance = null;  
+
+		public static function getInstance() : Snowmass {
+			return thisInstance;
+		}		
+		
+    	private function showLoginPage() : void
+		{
+		}
+		
+		private function onPreferences():void	{
+			var event:Event = new Event("addPreferencesTab");
+			dispatchEvent(event);
+		}
+		
+		private function showLogin():void	{
+			var loginPopup : Login = Login(PopUpManager.createPopUp(this, Login, true));
+			this.mainContainer.visible=false;
+			PopUpManager.centerPopUp(loginPopup);
+		}
+		
+		private function showHelp():void {
+		
+		}
+		
+		private function onLogout():void {
+			
+		}
+		
+		private function init() : void {
+			thisInstance = this;
+			showLogin();
+		}
+]]>		
+</mx:Script>
+</mx:Application>
